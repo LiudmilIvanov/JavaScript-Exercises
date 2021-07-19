@@ -11,7 +11,7 @@ elements.button().addEventListener('click', getInputInformaiton);
 function getInputInformaiton(e) {
     e.preventDefault();
     const { value } = elements.input();
-    const towns = value.split(' ,').map((t) => { return { name: t } })
+    const towns = value.split(', ').map((t) => { return { name: t } })
     appendTowns(towns);
 };
 
@@ -22,7 +22,8 @@ function appendTowns(towns) {
             const htmlResult = template({towns});
             elements.root().innerHTML = htmlResult;
 
-        });
+        })
+        .catch((e) => console.error(e));
 
 };
 
