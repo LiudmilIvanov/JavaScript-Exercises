@@ -10,16 +10,17 @@ elements.button().addEventListener('click', getInputInformaiton);
 
 function getInputInformaiton(e) {
     e.preventDefault();
-    const { value: towns } = elements.input();
+    const { value } = elements.input();
+    const towns = value.split(' ,').map((t) => { return { name: t } })
     appendTowns(towns);
 };
 
 function appendTowns(towns) {
     getTemplate()
         .then((templateSource) => {
-          //  console.log(templateSource)
-
-
+            const template = Handlebars.compile(templateSource);
+            const htmlResult = template({towns});
+            elements.root().innerHTML = htmlResult;
 
         });
 
