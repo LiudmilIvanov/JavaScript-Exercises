@@ -34,11 +34,7 @@ function attachEventListerner() {
                 parapgraph.style.display = 'none'
             }
             parapgraph.display == 'block'
-           
-            console.log(parapgraph)       
         }
-
-
     })
 }
 
