@@ -11,6 +11,15 @@ const router = Sammy('#main', function(){
         });
     });
 
+    this.get('#/about', function() {
+        this.loadPartials({
+            'header': './templates/common/header.hbs',
+            'footer': './templates/common/footer.hbs',
+        }).then(function() {
+            this.partial('../templates/about/about.hbs');
+        });
+    });
+
     this.get('#/login', function() {
         this.loadPartials({
             'header': './templates/common/header.hbs',
@@ -21,7 +30,15 @@ const router = Sammy('#main', function(){
         });
     });
 
-
+    this.get('#/register', function() {
+        this.loadPartials({
+            'header': './templates/common/header.hbs',
+            'footer': './templates/common/footer.hbs',
+            'registerForm': './templates/register/registerForm.hbs',
+        }).then(function() {
+            this.partial('./templates/register/registerPage.hbs');
+        })
+    });
 
 
 });
