@@ -17,11 +17,48 @@ function viewAllBooks() {
                 Object.keys(data).forEach(key => {
                   let trElement = document.createElement('tr');
 
-                  trElement.innerHTML = `<td>${data[key].name}</td><td>${data[key].author}</td><td>${data[key].isbn}</td><td><button>Edit</button><button>Delete</button></td>`;
+                  let bookNameTD = document.createElement('td');
+                  bookNameTD.innerHTML = data[key].name
+                
+                  let authorTD = document.createElement('td');
+                  authorTD.innerHTML = data[key].author;
+                  
+                  let isbnTD = document.createElement('td');
+                  isbnTD.innerHTML = data[key].isbn;
+
+                  let btnTD = document.createElement('td');
+
+                  let editBtn = document.createElement('button');
+                  editBtn.innerHTML = 'Edit';
+                  editBtn.setAttribute('data-key', key);
+                  editBtn.setAttribute('id', 'edit');
+
+                  let deleteBtn = document.createElement('button');
+                  deleteBtn.innerHTML = 'Delete';
+                  deleteBtn.setAttribute('data-key', key);
+                  deleteBtn.setAttribute('id', 'delete');
+
+                  btnTD.append(editBtn, deleteBtn);
+                  trElement.append(bookNameTD, authorTD, isbnTD, btnTD);
+
+                  // trElement.innerHTML = `<td>${data[key].name}</td><td>${data[key].author}</td><td>${data[key].isbn}</td><td><button data-key="${key}" id="edit">Edit</button><button id="delete">Delete</button></td>`;
                   tbodyElement.appendChild(trElement);
+               
+                
+                  //let deleteBtnEl = document.getElementById('delete');
+                
+                    deleteBtn.addEventListener('click', function() {
+                    fetch(`${baseUrl}/${key}.json`, {method: 'DELETE'});
+
+                  });
+
                 })
             });
-    });
+           
+              
+        });
+        
+
 };
 
 function addBook() {
@@ -32,13 +69,9 @@ function addBook() {
     let isbnInput = document.getElementById('isbn');
     let postUrl = `${baseUrl}.json`;
 
-
-
-    
-
     btnElement.addEventListener('click', function(e) {
        e.preventDefault();
-       
+
        let input = {
         name: titleInput.value,
         author: authorInput.value,
