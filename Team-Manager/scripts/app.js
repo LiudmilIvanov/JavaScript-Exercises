@@ -42,10 +42,11 @@ const router = Sammy('#main', function () {
         });
     });
 
-    this.get('/logout', function() {
+    this.get('/logout', function(context) {
         UserModel.signOut()
             .then((response) => {
-
+                localStorage.removeItem('userInfo');
+                context.redirect('#/home')
             }).catch((e) => console.error(e));
 
 
@@ -59,6 +60,19 @@ const router = Sammy('#main', function () {
         }).then(function () {
             this.partial('./templates/register/registerPage.hbs');
         })
+    });
+
+    this.get('#/catalog', function() {
+        this.loadPartials({
+            'header': './templates/common/header.hbs',
+            'footer': './templates/common/footer.hbs',
+            'teamMember': './templates/catalog/teamMember.hbs',
+            'teamControls': './templates/catalog/teamControls.hbs'
+
+        }).then(function() {
+            this.partial('../templates/catalog/details.hbs');
+        })
+
     });
 
     //POST
