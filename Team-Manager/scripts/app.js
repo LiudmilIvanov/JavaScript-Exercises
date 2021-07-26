@@ -62,15 +62,42 @@ const router = Sammy('#main', function () {
         })
     });
 
-    this.get('#/catalog', function() {
+    this.get('#/create', function(context) {
+        const userInfo = localStorage.getItem('userInfo');
+      
+        if (userInfo) {
+            const { uid, email} = JSON.parse(userInfo);
+            context.loggedIn = true;
+            context.email = email;
+            context.hasNoTeam = true;
+        }
+
         this.loadPartials({
             'header': './templates/common/header.hbs',
             'footer': './templates/common/footer.hbs',
-            'teamMember': './templates/catalog/teamMember.hbs',
-            'teamControls': './templates/catalog/teamControls.hbs'
+            'createForm': './templates/create/createForm.hbs'
+        }).then(function() {
+            this.partial('./templates/create/createPage.hbs');
+        });
+    });
+
+    this.get('#/catalog', function(context) {
+        const userInfo = localStorage.getItem('userInfo');
+      
+        if (userInfo) {
+            const { uid, email} = JSON.parse(userInfo);
+            context.loggedIn = true;
+            context.email = email;
+            context.hasNoTeam = true;
+        }
+       
+        this.loadPartials({
+            'header': './templates/common/header.hbs',
+            'footer': './templates/common/footer.hbs',
+            'team': './templates/catalog/team.hbs',
 
         }).then(function() {
-            this.partial('../templates/catalog/details.hbs');
+            this.partial('../templates/catalog/teamCatalog.hbs');
         })
 
     });
@@ -95,7 +122,7 @@ const router = Sammy('#main', function () {
             }).catch((e) => console.error(e));
     });
 
-    this.post('login', function (context) {
+    this.post('/login', function (context) {
         const { email, password } = context.params;
 
         UserModel.signInWithEmailAndPassword(email, password) 
@@ -103,6 +130,27 @@ const router = Sammy('#main', function () {
                 localStorage.setItem('userInfo', JSON.stringify({uid, email}));
                 this.redirect('#/home');
             }).catch((e) => console.error(e));
+    });
+
+    this.post('/create', function(context) {
+        const postURL = 'https://team-manager-6454f-default-rtdb.firebaseio.com/teams/.json';
+        const { name, comment } = context.params
+
+        let team = {
+            name: name, 
+            comment :comment
+        };
+
+        fetch(postURL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+              },
+            body: JSON.stringify(team),
+        })
+            .then((reponse) => reponse.json)
+            .catch((e) => console.error(e));
+
     });
 
 });
