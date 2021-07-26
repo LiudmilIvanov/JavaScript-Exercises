@@ -45,24 +45,34 @@ const router = Sammy('#main', function () {
     });
 
     //POST
-    this.post('/register', function(context) {
-        const { email, password, repeatPassword} = context.params;
+    this.post('/register', function (context) {
+        const { email, password, repeatPassword } = context.params;
+        let err = document.querySelector('#errorBox');
 
         if (password !== repeatPassword) {
-            let err = document.querySelector('#errorBox');
             err.textContent = 'Both passwords do not match.';
             err.style.display = 'block';
             return;
         }
+        err.style.display = 'none';
+
 
         UserModel.createUserWithEmailAndPassword(email, password)
             .then((createUser) => {
 
-
-
                 this.redirect('/login');
             }).catch((e) => console.error(e));
+    });
 
+    this.post('login', function (context) {
+        const { email, password } = context.params;
+
+        UserModel.signInWithEmailAndPassword(email, password) 
+            .then((userInfo) => {
+                console.log(userInfo);
+                this.redirect('#/home');
+
+            }).catch((e) => console.error(e));
     });
 
 });
