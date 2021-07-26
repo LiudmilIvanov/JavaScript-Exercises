@@ -6,7 +6,15 @@ const router = Sammy('#main', function () {
 
     //GET
 
-    this.get('#/home', function () {
+    this.get('#/home', function (context) {
+        const userInfo = localStorage.getItem('userInfo');
+      
+        if (userInfo) {
+            const { uid, email} = JSON.parse(userInfo);
+            context.loggedIn = true;
+            context.email = email;
+        }
+      
         this.loadPartials({
             'header': './templates/common/header.hbs',
             'footer': './templates/common/footer.hbs',
@@ -32,6 +40,15 @@ const router = Sammy('#main', function () {
         }).then(function () {
             this.partial('../templates/login/loginPage.hbs');
         });
+    });
+
+    this.get('/logout', function() {
+        UserModel.signOut()
+            .then((response) => {
+
+            }).catch((e) => console.error(e));
+
+
     });
 
     this.get('#/register', function () {
@@ -68,10 +85,9 @@ const router = Sammy('#main', function () {
         const { email, password } = context.params;
 
         UserModel.signInWithEmailAndPassword(email, password) 
-            .then((userInfo) => {
-                console.log(userInfo);
+            .then(({user: {uid, email}}) => {
+                localStorage.setItem('userInfo', JSON.stringify({uid, email}));
                 this.redirect('#/home');
-
             }).catch((e) => console.error(e));
     });
 
