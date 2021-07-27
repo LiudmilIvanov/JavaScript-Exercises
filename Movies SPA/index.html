@@ -155,6 +155,31 @@
 
       
 
+        
+-->
+
+        <footer class="page-footer font-small">
+            <div class="footer-copyright text-center py-3">© 2020
+                <a href="https://softuni.bg/trainings/2840/js-applications-june-2020/internal" class="text-dark">JS
+                    Applications</a>
+            </div>
+        </footer>
+    </div>
+    <script type="text/x-handlebars-template" id="login-form-template">
+        <form id="login-form" class="text-center border border-light p-5" onsubmit="onLoginSubmit(event)">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" placeholder="Email" name="email" value="">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" placeholder="Password" name="password" value="">
+            </div>
+        
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </script>
+    <script type="text/x-handlebars-template" id="register-form-template">
         <form class="text-center border border-light p-5" action="#" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
@@ -172,30 +197,33 @@
         
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
--->
-
-        <footer class="page-footer font-small">
-            <div class="footer-copyright text-center py-3">© 2020
-                <a href="https://softuni.bg/trainings/2840/js-applications-june-2020/internal" class="text-dark">JS
-                    Applications</a>
-            </div>
-        </footer>
-    </div>
-    <script src="script.js"></script>
-    <script type="text/x-handlebars-template" id="login-form-template">
-        <form class="text-center border border-light p-5" action="" method="">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" placeholder="Email" name="email" value="">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" placeholder="Password" name="password" value="">
-            </div>
-        
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
     </script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<!--
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBUj7xEfbaMs0QV0nbpv0rRDutrB90JhmU",
+    authDomain: "movies-3f0d2.firebaseapp.com",
+    databaseURL: "https://movies-3f0d2-default-rtdb.firebaseio.com",
+    projectId: "movies-3f0d2",
+    storageBucket: "movies-3f0d2.appspot.com",
+    messagingSenderId: "332564011120",
+    appId: "1:332564011120:web:463ea1f30a2de8d78afcb5"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+-->
+    <script src="script.js"></script>
+    <script src="services.js"></script>
+    <script src="init.js"></script>
+
 
 </body>
 
