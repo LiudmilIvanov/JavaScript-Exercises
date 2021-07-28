@@ -1,4 +1,5 @@
 const routes = {
+    '/': 'home-template',
     'login': 'login-form-template',
     'register': 'register-form-template',
 };
@@ -11,3 +12,7 @@ const router = (path) => {
     
 }
 
+const navigate = (path) => {
+    history.pushState({}, '', path);
+    router(path);
+}

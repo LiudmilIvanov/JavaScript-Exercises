@@ -1,10 +1,10 @@
 const apiKey = 'AIzaSyBUj7xEfbaMs0QV0nbpv0rRDutrB90JhmU';
 
 const authService = {
-    login(email, password) {
+    async login(email, password) {
         let url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`;
 
-        fetch(url, {
+        let response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -12,9 +12,10 @@ const authService = {
             body: JSON.stringify({
                 email, password
             }),
-        }).then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((e) => console.error(e));
+        });
+        let data = response.json();
+        localStorage.setItem('auth', JSON.stringify(data));
+        console.log('yes')
     }
 
 };

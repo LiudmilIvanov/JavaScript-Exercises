@@ -13,8 +13,8 @@
 
 <body>
     <div class="container" id="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-            <a class="navbar-brand text-light" href="#">Movies</a>
+       <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+            <a class="navbar-brand text-light" href="/">Movies</a>
             <ul class="navbar-nav ml-auto navigation">
                 <li class="nav-item">
                     <a class="nav-link">Welcome, email</a>
@@ -41,12 +41,7 @@
         </section>
 
 
-        <!--  <div class="jumbotron jumbotron-fluid text-light" style="background-color: #343a40;">
-            <img src="https://s.studiobinder.com/wp-content/uploads/2019/06/Best-M-Night-Shyamalan-Movies-and-Directing-Style-StudioBinder.jpg"
-                class="img-fluid" alt="Responsive image">
-            <h1 class="display-4">Movies</h1>
-            <p class="lead">Unlimited movies, TV shows, and more. Watch anywhere. Cancel anytime.</p>
-        </div> 
+        <!--  
         
         <h1 class="text-center">Movies</h1>
         <section>
@@ -165,6 +160,7 @@
             </div>
         </footer>
     </div>
+   
     <script type="text/x-handlebars-template" id="login-form-template">
         <form id="login-form" class="text-center border border-light p-5" onsubmit="onLoginSubmit(event)">
             <div class="form-group">
@@ -198,13 +194,22 @@
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
     </script>
+    <script type="text/x-handlebars-template" id="home-template">
+        {{>navigation-template}}
+        <div class="jumbotron jumbotron-fluid text-light" style="background-color: #343a40;">
+            <img src="https://s.studiobinder.com/wp-content/uploads/2019/06/Best-M-Night-Shyamalan-Movies-and-Directing-Style-StudioBinder.jpg"
+                class="img-fluid" alt="Responsive image">
+            <h1 class="display-4">Movies</h1>
+            <p class="lead">Unlimited movies, TV shows, and more. Watch anywhere. Cancel anytime.</p>
+        </div> 
+    </script>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<!--
+    <!--
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
@@ -218,9 +223,9 @@
   };
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
-</script>
+</>
 -->
-    <script src="script.js"></script>
+    <script src="router.js"></script>
     <script src="services.js"></script>
     <script src="init.js"></script>
 

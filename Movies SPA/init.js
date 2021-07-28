@@ -1,4 +1,8 @@
 function addEventListeners() {
+  //  let navigationTemplate = Handlebars.compile(document.getElementById('navigation-template').innerHTML);
+
+  //  Handlebars.registerPartial('navigation-template', navigationTemplate);
+
     document.querySelector('.navigation').addEventListener('click', navigateHandler)
 }
 
@@ -10,18 +14,20 @@ function navigateHandler(e) {
     }
     let url = new URL(e.target.href);
 
-    history.pushState({}, '', url.pathname);
-    router(url.pathname.slice(1));
+    navigate(url.pathname.slice(1));
 }
 
 function onLoginSubmit(e) {
     e.preventDefault();
-    
+
     let formData = new FormData(document.forms['login-form']);
     let email = formData.get('email');
     let password = formData.get('password');
-    
-    authService.login(email, password);
+
+    authService.login(email, password)
+        .then(data => {
+            navigate('/');
+        })
 }
 
 
