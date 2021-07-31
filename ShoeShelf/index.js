@@ -1,4 +1,5 @@
 const UserModel = firebase.auth();
+const DB = firebase.firestore();
 
 console.log(UserModel)
 
@@ -9,10 +10,21 @@ const app = Sammy('#root', function () {
     //Home routes
 
     this.get('/home', function (context) {
-        extendContext(context)
-            .then(function () {
-                this.partial('./templates/homeGuest.hbs');
-            });
+        DB.collection('offers')
+            .get()
+            .then((response) => {
+                context.offers = [];
+                response.forEach((offer) => {
+                    context.offers.push({ id: offer.id, ...offer.data() });
+                });
+
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/home.hbs');
+                    });
+            }).catch(errorHandler);
+
+
 
     });
 
@@ -64,26 +76,59 @@ const app = Sammy('#root', function () {
 
     });
 
-    this.get('/logout' , function() {
+    this.get('/logout', function () {
         UserModel.signOut()
             .then((response) => {
+                clearUserData();
 
+                this.redirect('/home');
             }).catch(errorHandler);
 
     });
 
     //Offers routes
 
-    this.get('/create-offer', function () {
-        this.partial('./templates/createOffer.hbs');
+    this.get('/create-offer', function (context) {
+        extendContext(context)
+            .then(function () {
+                this.partial('./templates/createOffer.hbs');
+            })
+
     });
 
-    this.get('/edit-offer', function () {
-        this.partial('./templates/editOffer.hbs');
+    this.post('create-offer', function (context) {
+        const { productName, price, imageUrl, description, brand } = context.params;
+
+        DB.collection('offers').add({
+            productName,
+            price,
+            imageUrl,
+            description,
+            brand,
+            selesman: getUserData().uid,
+        })
+            .then((createdProduct) => {
+                console.log(createdProduct)
+                this.redirect('/home');
+
+            }).catch(errorHandler);
+
+
+
     });
 
-    this.get('/details', function () {
-        this.partial('./templates/details.hbs');
+    this.get('/edit-offer:id', function (context) {
+        extendContext(context)
+            .then(function () {
+                this.partial('./templates/editOffer.hbs');
+            })
+    });
+
+    this.get('/details:id', function () {
+        extendContext(context)
+            .then(function () {
+                this.partial('./templates/details.hbs');
+            })
     });
 
 });
@@ -92,9 +137,9 @@ function extendContext(context) {
     const user = getUserData();
     context.isLoggedIn = Boolean(getUserData());
     context.email = user ? user.email : '';
-    
+
     return context.loadPartials({
-        'header': './partials/header.hbs', 
+        'header': './partials/header.hbs',
         'footer': './partials/footer.hbs',
     })
 };
@@ -111,7 +156,11 @@ function saveUserData(data) {
 function getUserData() {
     let user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
-}
+};
+
+function clearUserData() {
+    localStorage.removeItem('user');
+};
 
 
 (() => {
