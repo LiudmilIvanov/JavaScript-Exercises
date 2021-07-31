@@ -42,12 +42,26 @@ const app = Sammy('#root', function () {
 
     });
 
+
     this.get('/login', function (context) {
         extendContext(context)
             .then(function () {
                 this.partial('./templates/login.hbs');
             });
     });
+
+    this.post('/login', function (context) {
+        const { email, password } = context.params;
+
+        UserModel.signInWithEmailAndPassword(email, password)
+            .then((userData) => {
+
+                this.redirect('/home');
+
+            }).catch(errorHandler);
+
+
+    })
 
     //Offers routes
 
@@ -70,6 +84,10 @@ function extendContext(context) {
         'header': './partials/header.hbs',
         'footer': './partials/footer.hbs',
     })
+};
+
+function errorHandler(error) {
+    console.log(error);
 };
 
 
