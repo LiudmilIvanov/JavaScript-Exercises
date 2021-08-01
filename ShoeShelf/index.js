@@ -46,7 +46,6 @@ const app = Sammy('#root', function () {
 
         UserModel.createUserWithEmailAndPassword(email, password)
             .then((userData) => {
-                console.log(userData)
 
                 this.redirect('/home');
             }).catch((e) => console.log(e));
@@ -108,7 +107,7 @@ const app = Sammy('#root', function () {
             selesman: getUserData().uid,
         })
             .then((createdProduct) => {
-                console.log(createdProduct)
+
                 this.redirect('/home');
 
             }).catch(errorHandler);
@@ -117,18 +116,29 @@ const app = Sammy('#root', function () {
 
     });
 
-    this.get('/edit-offer:id', function (context) {
+    this.get('/edit-offer/:id', function (context) {
         extendContext(context)
             .then(function () {
                 this.partial('./templates/editOffer.hbs');
             })
     });
 
-    this.get('/details:id', function () {
-        extendContext(context)
-            .then(function () {
-                this.partial('./templates/details.hbs');
-            })
+    this.get('/details/:id', function (context) {
+        const { id } = context.params;
+
+        DB.collection('offers').doc(id).get()
+            .then((response) => {
+                const actualOfferData = response.data();
+                const imTheSalesMan = actualOfferData.salesman === getUserData().uid;
+
+                context.offer = { ...actualOfferData, imTheSalesMan };
+
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/details.hbs');
+                    })
+            });
+
     });
 
 });
