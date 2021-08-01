@@ -2,8 +2,7 @@
 <div class="offer-details">
     <h1>{{offer.productName}}</h1>
     <div class="info">
-        <img src="{{ offer.imageUrl }}"
-            alt="">
+        <img src="{{ offer.imageUrl }}" alt="">
         <div class="description">{{offer.description}}
             <br>
             <br>
@@ -12,12 +11,15 @@
     </div>
     <div class="actions">
         {{#if offer.imTheSalesMan}}
-        <a>Edit</a>
-        <a>Delete</a>
+        <a href="#/edit/{{ offer.id }}">Edit</a>
+        <a href="#/delete/{{ offer.id }}">Delete</a>
         {{else}}
-        <a>Buy</a>
-        {{/if}}
+        {{#if offer.imInTheClientsList}}
         <span>You bought it</span>
+        {{else}}
+        <a href="#/buy/{{ offer.id }}">Buy</a>
+        {{/if}}
+        {{/if}}
     </div>
 </div>
 {{> footer}}

@@ -24,8 +24,6 @@ const app = Sammy('#root', function () {
                     });
             }).catch(errorHandler);
 
-
-
     });
 
     //User routes
@@ -95,7 +93,7 @@ const app = Sammy('#root', function () {
 
     });
 
-    this.post('create-offer', function (context) {
+    this.post('/create-offer', function (context) {
         const { productName, price, imageUrl, description, brand } = context.params;
 
         DB.collection('offers').add({
@@ -111,16 +109,47 @@ const app = Sammy('#root', function () {
                 this.redirect('/home');
 
             }).catch(errorHandler);
-
-
-
     });
 
-    this.get('/edit-offer/:id', function (context) {
-        extendContext(context)
-            .then(function () {
-                this.partial('./templates/editOffer.hbs');
+    this.get('/edit/:id', function (context) {
+        const { id } = context.params;
+
+        DB.collection('offers')
+            .doc(id)
+            .get()
+            .then((response) => {
+                context.offer = { id, ...response.data() };
+
+                console.log(context.offer)
+                extendContext(context)
+                    .then(function () {
+                        this.partial('./templates/editOffer.hbs');
+                    })
             })
+    });
+
+    this.post('/edit/:id', function (context) {
+        const { id, productName, price, brand, description, imageUrl } = context.params;
+
+        DB.collection('offers')
+            .doc(id)
+            .get()
+            .then((response) => {
+
+                return DB.collection('offers')
+                    .doc(id)
+                    .set({
+                        ...response.data(),
+                        productName,
+                        price,
+                        brand,
+                        description,
+                        imageUrl,
+                    })
+            })
+            .then(() => {
+                this.redirect(`#/details/${id}`)
+            });
     });
 
     this.get('/details/:id', function (context) {
@@ -130,8 +159,9 @@ const app = Sammy('#root', function () {
             .then((response) => {
                 const actualOfferData = response.data();
                 const imTheSalesMan = actualOfferData.salesman === getUserData().uid;
+                const imInTheClientsList = Boolean(actualOfferData.clients.find((id) => id === getUserData().uid));
 
-                context.offer = { ...actualOfferData, imTheSalesMan };
+                context.offer = { ...actualOfferData, imTheSalesMan, id, imTheSalesMan };
 
                 extendContext(context)
                     .then(function () {
@@ -141,7 +171,37 @@ const app = Sammy('#root', function () {
 
     });
 
+    this.get('/delete/:id', function (context) {
+        const { id } = context.params;
+
+        DB.collection('offers').doc(id).delete()
+            .then(() => {
+                this.redirect('#/home');
+            }).catch(errorHandler);
+    });
+
+    this.get('/buy/:id', function (context) {
+        const { id } = context.params;
+
+        DB.collection('offers')
+            .doc(id)
+            .get()
+            .then((response) => {
+                const offerData = { ...response.data() };
+                offerData.clients.push(getUserData().uid);
+
+                return DB.collection('offers')
+                    .doc(id)
+                    .set(offerData)
+            })
+            .then(() => {
+                this.redirect(`#/details/${id}`)
+            })
+            .catch(errorHandler);
+    });
 });
+
+
 
 function extendContext(context) {
     const user = getUserData();
