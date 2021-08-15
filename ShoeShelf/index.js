@@ -1,8 +1,6 @@
 const UserModel = firebase.auth();
 const DB = firebase.firestore();
 
-console.log(UserModel)
-
 const app = Sammy('#root', function () {
 
     this.use('Handlebars', 'hbs');
@@ -69,8 +67,6 @@ const app = Sammy('#root', function () {
                 this.redirect('/home');
 
             }).catch(errorHandler);
-
-
     });
 
     this.get('/logout', function () {
@@ -80,7 +76,6 @@ const app = Sammy('#root', function () {
 
                 this.redirect('/home');
             }).catch(errorHandler);
-
     });
 
     //Offers routes
@@ -90,7 +85,6 @@ const app = Sammy('#root', function () {
             .then(function () {
                 this.partial('./templates/createOffer.hbs');
             })
-
     });
 
     this.post('/create-offer', function (context) {
