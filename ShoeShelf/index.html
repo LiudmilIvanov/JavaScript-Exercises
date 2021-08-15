@@ -7,19 +7,21 @@
     <link rel="stylesheet" href="../public/styles.css">
     <link rel="icon" type="image/png" href="./public/favicon.png">
     <title>Shoe Shelf</title>
-</head>
-
-<body>
-    <main id="root"></main>
     <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <script src="./node_modules/handlebars/dist/handlebars.min.js"></script>
     <script src="./node_modules/sammy/lib/sammy.js"></script>
     <script src="./node_modules/sammy/lib/plugins/sammy.handlebars.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
-    <script></script>
+
     <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.0/firebase-firestore.js"></script>
+    
+    <script type="module" src="./src/index.js" defer></script>
+</head>
+
+<body>
+    <main id="root"></main>
 
     <script>
         // Your web app's Firebase configuration
@@ -34,7 +36,6 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
     </script>
-    <script src="index.js"></script>
 
 
 </body>
