@@ -1,10 +1,17 @@
 import { buyPage, createPage, createPost, deleteOffer, detailsPageFunction, editPage, editPost } from './controllers/catalog.js';
 import { homePage } from './controllers/home.js';
 import { registerPage, loginPage, logout, registerPost, loginPost } from './controllers/user.js';
+import { getUserData } from './util.js';
 
 const app = Sammy('#root', function () {
 
     this.use('Handlebars', 'hbs');
+
+   /* const user = getUserData();
+    this.userData = {
+        isLoggedIn: user ? true : false,
+        user,
+    };*/
 
     //Home routes
 

@@ -1,16 +1,14 @@
 import { errorHandler, extendContext, getUserData, clearUserData, saveUserData, UserModel } from '../util.js';
 
-export function registerPage(context) {
-    extendContext(context)
-        .then(function () {
-            this.partial('./templates/register.hbs');
-        });
+export async function registerPage(context) {
+    await extendContext(context)
+    context.partial('./templates/register.hbs');
 };
 
 export function loginPage(context) {
     extendContext(context)
         .then(function () {
-            this.partial('./templates/login.hbs');
+            context.partial('./templates/login.hbs');
         });
 };
 

@@ -1,14 +1,24 @@
 import init from './db-init.js';
 
-export function extendContext(context) {
+export async function extendContext(context) {
     const user = getUserData();
     context.isLoggedIn = Boolean(getUserData());
     context.email = user ? user.email : '';
-
-    return context.loadPartials({
+    
+    const partials = await Promise.all([
+        context.load('./partials/header.hbs'),
+        context.load('./partials/footer.hbs')
+        
+    ]);
+    context.partials = {
+        header: partials[0],
+        footer: partials[1],
+    };
+    
+  /*  return context.loadPartials({
         'header': './partials/header.hbs',
         'footer': './partials/footer.hbs',
-    })
+    })*/
 };
 
 export function errorHandler(error) {
