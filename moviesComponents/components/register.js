@@ -1,4 +1,6 @@
 import { html, render } from 'https://unpkg.com/lit-html?module';
+import { register } from '../services/authServices.js';
+
 
 const template = (ctx) => html`
 
@@ -50,7 +52,14 @@ export default class Register extends HTMLElement {
             return;
         }
 
-        notify('successful registration!', 'success');
+        register(email, password)
+        .then((res) => {
+                notify('successful registration!', 'success');
+            //TODO redirect to home.
+            })
+            .catch(err => {
+                notify(err.message, 'success');
+            })
     }
 
     render() {
