@@ -1,5 +1,5 @@
 import { Router } from 'https://unpkg.com/@vaadin/router';
-import Home  from './components/home.js';
+import Home from './components/home.js';
 import Register from './components/register.js';
 
 customElements.define('home-component', Home);
@@ -20,3 +20,15 @@ router.setRoutes([
     }
 
 ]);
+
+function notify(message, type = 'success') {
+    switch (type) {
+        case 'success':
+
+            break;
+
+        case 'error':
+
+            break;
+    }
+}

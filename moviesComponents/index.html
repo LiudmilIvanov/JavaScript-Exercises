@@ -32,15 +32,15 @@
         </nav>
         <div id="root"></div>
 
-        <!-- <section class="notifications" style="display: none;">
+        <section class="notifications" style="display: none;">
             <p class="notification-message" id="errorBox">Message...</p>
         </section>
-        <section class="notifications"  style="display: none;background-color:rgba(1, 131, 29, 0.541);">
+        <section class="notifications" style="display: none;background-color:rgba(1, 131, 29, 0.541);">
             <p class="notification-message" id="successBox">Message...</p>
-        </section> 
-        
+        </section>
 
-        <div class="jumbotron jumbotron-fluid text-light" style="background-color: #343a40;">
+
+        <!-- <div class="jumbotron jumbotron-fluid text-light" style="background-color: #343a40;">
             <img src="https://s.studiobinder.com/wp-content/uploads/2019/06/Best-M-Night-Shyamalan-Movies-and-Directing-Style-StudioBinder.jpg"
                 class="img-fluid" alt="Responsive image">
             <h1 class="display-4">Movies</h1>
@@ -190,6 +190,28 @@
             </div>
         </footer>
     </div>
+    <script>
+        function notify(message, type = 'success') {
+            let notificationElement;
+
+            switch (type) {
+                case 'success':
+                    notificationElement = document.getElementById('successBox');
+
+                    break;
+
+                case 'error':
+                    notificationElement = document.getElementById('errorBox')
+                    break;
+            }
+            notificationElement.innerText = message;
+            notificationElement.parentElement.style.display = 'block'
+        
+            setTimeout(() => {
+                notificationElement.parentElement.style.display = 'none'
+            }, 3000);
+        }
+    </script>
 
 </body>
 

@@ -41,16 +41,16 @@ export default class Register extends HTMLElement {
 
         if (password.length < 6) {
             console.log('password too short!');
+            notify('password too short!', 'error')
             return;
         }
 
         if (password != repeatPassword) {
-            console.log('password must match!');
+            notify('password must match!', 'error')
             return;
-
         }
 
-
+        notify('successful registration!', 'success');
     }
 
     render() {
