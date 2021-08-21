@@ -10,5 +10,7 @@ const api = {
 export const getAllMovies = async (searchText) => {
     let res = await request(api.movies, 'GET');
 
+    console.log(api.movies)
+
     return Object.keys(res).map(key => ({ key, ...res[key] })).filter(x => !searchText || searchText == x.title);
 }

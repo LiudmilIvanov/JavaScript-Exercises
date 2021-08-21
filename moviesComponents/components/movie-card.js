@@ -2,9 +2,9 @@ import { html, render } from 'https://unpkg.com/lit-html?module';
 
 const template = (ctx) => html`
     <div class="card mb-4">
-        <img class="card-img-top" src=${ctx.data.imageUrl} alt=${ctx.data.imageUrl} width="400">
+        <img class="card-img-top" src="${ctx.data.imageUrl}" alt="${ctx.data.imageUrl}" width="400">
         <div class="card-body">
-            <h4 class=${ctx.data.title}>Top Gun 2</h4>
+            <h4 class="card-title">${ctx.data.title}</h4>
         </div>
         <div class="card-footer">
             <a href="#/details/CUtL9j4qI0XVhn9kTUsx"><button type="button" class="btn btn-info">Details</button></a>
