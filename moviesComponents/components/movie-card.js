@@ -7,7 +7,7 @@ const template = (ctx) => html`
             <h4 class="card-title">${ctx.data.title}</h4>
         </div>
         <div class="card-footer">
-            <a href="#/details/CUtL9j4qI0XVhn9kTUsx"><button type="button" class="btn btn-info">Details</button></a>
+            <a href="/details/${ctx.data.key}"><button type="button" class="btn btn-info">Details</button></a>
         </div>
     
     </div>
