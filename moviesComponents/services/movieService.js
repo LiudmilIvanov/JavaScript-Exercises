@@ -26,3 +26,9 @@ export const getOneMovie = async (id) => {
 
     // return Object.assign(res, {isOwn: res.creator == email, alreadyLiked, likes: likes.length});
 };
+
+export const likeMovie = async (id, creator) => {
+    let res = await request(`${databaseUrl}/movies/${id}/likes.json`, 'POST', {creator});
+
+    return res;
+}
